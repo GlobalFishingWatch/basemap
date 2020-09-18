@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basemap</title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body>
+  <div id='map' style='width: 100%; height: 800px;'></div>
+  <script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZW5yaXF1ZXR1eWEiLCJhIjoiY2loNmFwYjJuMDlzZnR4bHh3NnRyNmQxcCJ9.vf_v5i6RWNz5Q7rglf35pQ';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: {
+      version: 8,
+      glyphs:
+    'https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-glyphs/master/_output/{fontstack}/{range}.pbf?raw=true',
+  sprite: 'https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-sprites/master/out/sprites',
+      sources: {
+        'bathymetry': {
+          type: 'raster',
+          tiles: ['http://localhost:9090/bathymetry/{z}/{x}/{y}.png'],
+          maxzoom: 8
+        },
+        'basemap_vector': {
+          type: 'vector',
+          tiles: ['http://localhost:9090/vector/{z}/{x}/{y}.pbf'],
+          maxzoom: 10,
+        }
+      },
+      layers: [
+        {
+          'id': 'bg',
+          'type': 'background',
+          'paint': {
+            'background-color': '#002357'
+          }
+        },
+        {
+          id: 'bathymetry',
+          type: 'raster',
+          source: 'bathymetry'
+        },
+        {
+          id: 'countries',
+          type: 'fill',
+          source: 'basemap_vector',
+          'source-layer': 'countries',
+          paint: {
+            'fill-color': '#274777'
+          },
+        },
+        {
+          id: 'countries_boundaries',
+          type: 'line',
+          source: 'basemap_vector',
+          'source-layer': 'countries',
+          paint: {
+            'line-color': '#ccccff',
+            'line-opacity': .1,
+          }
+        },
+        {
+          id: 'countries_labels',
+          type: 'symbol',
+          source: 'basemap_vector',
+          'source-layer': 'country_centroids',
+          layout: {
+            'text-field': 'c:{SHORT_NAME}',
+            'text-font': ['Roboto Mono Light'],
+            'text-size': 13,
+            'text-allow-overlap': true,
+          }
+        },
+        {
+          id: 'regions_boundaries',
+          type: 'line',
+          source: 'basemap_vector',
+          'source-layer': 'regions',
+          paint: {
+            'line-color': '#ccccff',
+            'line-opacity': .1,
+            'line-dasharray': [6,4]
+          }
+        },
+        {
+          id: 'populated_places',
+          type: 'symbol',
+          source: 'basemap_vector',
+          'source-layer': 'populated_places',
+          layout: {
+            'text-field': 'p:{NAME}',
+            'text-font': ['Roboto Mono Light'],
+            'text-size': 10,
+            'text-allow-overlap': true,
+          },
+          paint: {
+            'text-color': 'red',
+          }
+        },
+        {
+          id: 'graticules',
+          type: 'line',
+          source: 'basemap_vector',
+          'source-layer': 'graticules',
+          paint: {
+            'line-color': '#ff00ff',
+            'line-opacity': 1,
+          }
+        },
+      ]
+    }, // stylesheet location
+    center: [-74.5, 40], // starting position [lng, lat]
+    zoom: 1, // starting zoom,
+    hash: true,
+  });
+  map.on('click','countries', (event) => {
+    console.log(event.features)
+  })
+  </script>
+</body>
+</html>
