@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basemap test</title>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body>
+  <div id='map' style='width: 100%; height: 800px;'></div>
+  <script>
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'https://raw.githubusercontent.com/GlobalFishingWatch/basemap/main/viewer/style.json'
+    });
+  </script>
+</body>
+</html>

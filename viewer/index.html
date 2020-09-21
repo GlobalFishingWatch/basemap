@@ -10,15 +10,23 @@
 <body>
   <div id='map' style='width: 100%; height: 800px;'></div>
   <script>
-  mapboxgl.accessToken = 'pk.eyJ1IjoiZW5yaXF1ZXR1eWEiLCJhIjoiY2loNmFwYjJuMDlzZnR4bHh3NnRyNmQxcCJ9.vf_v5i6RWNz5Q7rglf35pQ';
   fetch('./style.json').then(response => response.json()).then((style) => {
     const urlParams = new URLSearchParams(window.location.search);
     const useLocalTiles = urlParams.get('useLocalTiles') === 'true'
     if (useLocalTiles) {
-      style.style.sources.bathymetry.tiles = ['http://localhost:9090/bathymetry/{z}/{x}/{y}.png']
-      style.style.sources.basemap_vector.tiles = ['http://localhost:9090/vector/{z}/{x}/{y}.pbf']
+      style.sources.bathymetry.tiles = ['http://localhost:9090/bathymetry/{z}/{x}/{y}.png']
+      style.sources.basemap_vector.tiles = ['http://localhost:9090/vector/{z}/{x}/{y}.pbf']
     }
-    var map = new mapboxgl.Map(style);
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style,
+      center: [
+        -74.5,
+        40
+      ],
+      zoom: 1,
+      hash: true
+    });
     map.on('click','countries', (event) => {
       console.log(event.features)
     })
