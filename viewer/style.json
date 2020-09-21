@@ -1,0 +1,118 @@
+{
+  "container": "map",
+  "style": {
+      "version": 8,
+      "glyphs": "https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-glyphs/master/_output/{fontstack}/{range}.pbf?raw=true",
+      "sprite": "https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-sprites/master/out/sprites",
+      "sources": {
+          "bathymetry": {
+              "type": "raster",
+              "tiles": [
+                  "https://storage.googleapis.com/public-tiles/basemap/bathymetry/{z}/{x}/{y}.png"
+              ],
+              "maxzoom": 8
+          },
+          "basemap_vector": {
+              "type": "vector",
+              "tiles": [
+                  "https://storage.googleapis.com/public-tiles/basemap/vector/{z}/{x}/{y}.pbf"
+              ],
+              "maxzoom": 10
+          }
+      },
+      "layers": [
+          {
+              "id": "bg",
+              "type": "background",
+              "paint": {
+                  "background-color": "#002357"
+              }
+          },
+          {
+              "id": "bathymetry",
+              "type": "raster",
+              "source": "bathymetry"
+          },
+          {
+              "id": "countries",
+              "type": "fill",
+              "source": "basemap_vector",
+              "source-layer": "countries",
+              "paint": {
+                  "fill-color": "#274777"
+              }
+          },
+          {
+              "id": "countries_boundaries",
+              "type": "line",
+              "source": "basemap_vector",
+              "source-layer": "countries",
+              "paint": {
+                  "line-color": "#ccccff",
+                  "line-opacity": 0.1
+              }
+          },
+          {
+              "id": "countries_labels",
+              "type": "symbol",
+              "source": "basemap_vector",
+              "source-layer": "country_centroids",
+              "layout": {
+                  "text-field": "c:{SHORT_NAME}",
+                  "text-font": [
+                      "Roboto Mono Light"
+                  ],
+                  "text-size": 13,
+                  "text-allow-overlap": true
+              }
+          },
+          {
+              "id": "regions_boundaries",
+              "type": "line",
+              "source": "basemap_vector",
+              "source-layer": "regions",
+              "paint": {
+                  "line-color": "#ccccff",
+                  "line-opacity": 0.1,
+                  "line-dasharray": [
+                      6,
+                      4
+                  ]
+              }
+          },
+          {
+              "id": "populated_places",
+              "type": "symbol",
+              "source": "basemap_vector",
+              "source-layer": "populated_places",
+              "layout": {
+                  "text-field": "p:{NAME}",
+                  "text-font": [
+                      "Roboto Mono Light"
+                  ],
+                  "text-size": 10,
+                  "text-allow-overlap": true
+              },
+              "paint": {
+                  "text-color": "red"
+              }
+          },
+          {
+              "id": "graticules",
+              "type": "line",
+              "source": "basemap_vector",
+              "source-layer": "graticules",
+              "paint": {
+                  "line-color": "#ff00ff",
+                  "line-opacity": 1
+              }
+          }
+      ]
+  },
+  "center": [
+      -74.5,
+      40
+  ],
+  "zoom": 1,
+  "hash": true
+}
