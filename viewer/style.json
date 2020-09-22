@@ -45,9 +45,27 @@
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "countries",
+            "minzoom": 2,
             "paint": {
                 "line-color": "#ccccff",
-                "line-opacity": 0.1
+                "line-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    2,
+                    0,
+                    3,
+                    0.2
+                ],
+                "line-width": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    2,
+                    1,
+                    7,
+                    4
+                ]
             }
         },
         {
@@ -55,13 +73,25 @@
             "type": "symbol",
             "source": "basemap_vector",
             "source-layer": "country_centroids",
+            "minzoom": 2,
             "layout": {
-                "text-field": "c:{SHORT_NAME}",
+                "text-field": "{SHORT_NAME}",
                 "text-font": [
                     "Roboto Mono Light"
                 ],
-                "text-size": 13,
-                "text-allow-overlap": true
+                "text-size": 15
+            },
+            "paint": {
+                "text-color": "white",
+                "text-opacity":  [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    2,
+                    0,
+                    3,
+                    0.5
+                ]
             }
         },
         {
@@ -69,40 +99,173 @@
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "regions",
+            "minzoom": 5,
             "paint": {
                 "line-color": "#ccccff",
-                "line-opacity": 0.1,
                 "line-dasharray": [
                     6,
                     4
+                ],
+                "line-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    5,
+                    0,
+                    6,
+                    0.2
                 ]
             }
         },
         {
-            "id": "populated_places",
+            "id": "populated_places_1",
             "type": "symbol",
             "source": "basemap_vector",
             "source-layer": "populated_places",
+            "filter": ["==", ["get", "SCALERANK"], 1],
+            "minzoom": 3,
             "layout": {
-                "text-field": "p:{NAME}",
+                "text-field": "{NAME}",
+                "text-font": [
+                    "Roboto Mono Light"
+                ],
+                "text-size": 12,
+                "text-offset": [0, -1]
+            },
+            "paint": {
+                "text-color": "white",
+                "text-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    3,
+                    0,
+                    4,
+                    0.5
+                ]
+            }
+        },
+        {
+            "id": "populated_places_dot_1",
+            "type": "circle",
+            "source": "basemap_vector",
+            "source-layer": "populated_places",
+            "filter": ["==", ["get", "SCALERANK"], 1],
+            "minzoom": 3,
+            "paint": {
+                "circle-radius": 2,
+                "circle-color": "white",
+                "circle-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    3,
+                    0,
+                    4,
+                    0.5
+                ]
+            }
+        },
+        {
+            "id": "populated_places_2345",
+            "type": "symbol",
+            "source": "basemap_vector",
+            "source-layer": "populated_places",
+            "filter": ["match", ["get", "SCALERANK"], [2, 3, 4, 5], true, false],
+            "minzoom": 5,
+            "layout": {
+                "text-field": "{NAME}",
                 "text-font": [
                     "Roboto Mono Light"
                 ],
                 "text-size": 10,
-                "text-allow-overlap": true
+                "text-offset": [0, -1]
             },
             "paint": {
-                "text-color": "red"
+                "text-color": "white",
+                "text-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    5,
+                    0,
+                    6,
+                    0.5
+                ]
             }
         },
         {
-            "id": "graticules",
+            "id": "populated_places_dot_2345",
+            "type": "circle",
+            "source": "basemap_vector",
+            "source-layer": "populated_places",
+            "filter": ["match", ["get", "SCALERANK"], [2, 3,4, 5], true, false],
+            "minzoom": 5,
+            "paint": {
+                "circle-radius": 2,
+                "circle-color": "white",
+                "circle-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    5,
+                    0,
+                    6,
+                    0.5
+                ]
+            }
+        },
+        {
+            "id": "graticules_50",
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "graticules",
+            "filter": ["==", ["get", "fifties"], true],
             "paint": {
-                "line-color": "#ff00ff",
-                "line-opacity": 1
+                "line-color": "white",
+                "line-width": 1,
+                "line-opacity": 0.5
+            }
+        },
+        {
+            "id": "graticules_10",
+            "type": "line",
+            "source": "basemap_vector",
+            "source-layer": "graticules",
+            "filter": ["==", ["get", "tens"], true],
+            "minzoom": 2,
+            "paint": {
+                "line-color": "white",
+                "line-width": 1,
+                "line-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    2,
+                    0,
+                    4,
+                    0.5
+                ]
+            }
+        },
+        {
+            "id": "graticules_1",
+            "type": "line",
+            "source": "basemap_vector",
+            "source-layer": "graticules",
+            "minzoom": 5,
+            "paint": {
+                "line-color": "white",
+                "line-width": 0.5,
+                "line-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    5,
+                    0,
+                    7,
+                    0.5
+                ]
             }
         }
     ]
