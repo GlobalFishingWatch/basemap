@@ -13,30 +13,31 @@ const CONVERT_TO_GEOJSON = true
 let cmd = ''
 
 const layers = [
-  {
-    name: 'countries',
-    input: 'data/gadm36_levels_shp/gadm36_0.shp',
-    tippecanoe: '--drop-densest-as-needed',
-  },
-  {
-    name: 'regions',
-    input: 'data/gadm36_levels_shp/gadm36_1.shp',
-    tippecanoe: '--drop-densest-as-needed',
-  },
-  {
-    name: 'country_centroids',
-    geojson: 'data/country_centroids.geojson',
-    tippecanoe: '--no-tile-size-limit --base-zoom=0'
-  },
-  {
-    name: 'populated_places',
-    input: 'data/populated-places/populated-places.shp',
-    // TODO filter our by admin level
-    tippecanoe: '--no-tile-size-limit --base-zoom=0'
-  },
+  // {
+  //   name: 'countries',
+  //   input: 'data/gadm36_levels_shp/gadm36_0.shp',
+  //   tippecanoe: '--drop-densest-as-needed',
+  // },
+  // {
+  //   name: 'regions',
+  //   input: 'data/gadm36_levels_shp/gadm36_1.shp',
+  //   tippecanoe: '--drop-densest-as-needed',
+  // },
+  // {
+  //   name: 'country_centroids',
+  //   geojson: 'data/country_centroids.geojson',
+  //   tippecanoe: '--no-tile-size-limit --base-zoom=0'
+  // },
+  // {
+  //   name: 'populated_places',
+  //   input: 'data/populated-places/populated-places.shp',
+  //   // TODO filter our by admin level
+  //   tippecanoe: '--no-tile-size-limit --base-zoom=0'
+  // },
   {
     name: 'graticules',
-    input: 'data/ne_110m_graticules_all/ne_110m_graticules_1.shp',
+    // input: 'data/ne_110m_graticules_all/ne_110m_graticules_1.shp',
+    geojson: 'data/graticules-clean.geojson',
     tippecanoe: '--no-tile-size-limit --base-zoom=0'
   },
 ]
