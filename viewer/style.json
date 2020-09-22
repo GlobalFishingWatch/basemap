@@ -45,6 +45,7 @@
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "countries",
+            "minzoom": 2,
             "paint": {
                 "line-color": "#ccccff",
                 "line-opacity": [
@@ -72,6 +73,7 @@
             "type": "symbol",
             "source": "basemap_vector",
             "source-layer": "country_centroids",
+            "minzoom": 2,
             "layout": {
                 "text-field": "{SHORT_NAME}",
                 "text-font": [
@@ -97,6 +99,7 @@
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "regions",
+            "minzoom": 5,
             "paint": {
                 "line-color": "#ccccff",
                 "line-dasharray": [
@@ -120,6 +123,7 @@
             "source": "basemap_vector",
             "source-layer": "populated_places",
             "filter": ["==", ["get", "SCALERANK"], 1],
+            "minzoom": 3,
             "layout": {
                 "text-field": "{NAME}",
                 "text-font": [
@@ -147,6 +151,7 @@
             "source": "basemap_vector",
             "source-layer": "populated_places",
             "filter": ["==", ["get", "SCALERANK"], 1],
+            "minzoom": 3,
             "paint": {
                 "circle-radius": 2,
                 "circle-color": "white",
@@ -167,6 +172,7 @@
             "source": "basemap_vector",
             "source-layer": "populated_places",
             "filter": ["match", ["get", "SCALERANK"], [2, 3, 4, 5], true, false],
+            "minzoom": 5,
             "layout": {
                 "text-field": "{NAME}",
                 "text-font": [
@@ -194,6 +200,7 @@
             "source": "basemap_vector",
             "source-layer": "populated_places",
             "filter": ["match", ["get", "SCALERANK"], [2, 3,4, 5], true, false],
+            "minzoom": 5,
             "paint": {
                 "circle-radius": 2,
                 "circle-color": "white",
@@ -213,7 +220,7 @@
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "graticules",
-            "filter": ["==", ["%", ["get", "degrees"], 50], 0],
+            "filter": ["==", ["get", "fifties"], true],
             "paint": {
                 "line-color": "white",
                 "line-width": 1,
@@ -225,7 +232,8 @@
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "graticules",
-            "filter": ["==", ["%", ["get", "degrees"], 10], 0],
+            "filter": ["==", ["get", "tens"], true],
+            "minzoom": 2,
             "paint": {
                 "line-color": "white",
                 "line-width": 1,
@@ -241,10 +249,11 @@
             }
         },
         {
-            "id": "graticules_5",
+            "id": "graticules_1",
             "type": "line",
             "source": "basemap_vector",
             "source-layer": "graticules",
+            "minzoom": 5,
             "paint": {
                 "line-color": "white",
                 "line-width": 0.5,
