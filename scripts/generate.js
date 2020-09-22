@@ -3,45 +3,49 @@ const exec = require('child_process').execSync
 const fs = require('fs')
 const rimraf = require('rimraf')
 
-// generate bathymetry tiles from merged and styled bathymetry tiff (see qgis project)
-// exec('gdal2tiles.py ./data/bathymetry_merged_styled.tif ./tiles/bathymetry --zoom 0-8 --xyz --webviewer=none')
-
-// vector
 const VECTOR_TILES_PATH = 'tiles/vector'
+const GENERATE_BATHYMETRY = false
 const CONVERT_TO_GEOJSON = false
 const MAX_ZOOM = 6
 
+// generate bathymetry tiles from merged and styled bathymetry tiff (see qgis project)
+if (GENERATE_BATHYMETRY) {
+  exec('gdal2tiles.py ./data/bathymetry_merged_styled.tif ./tiles/bathymetry --zoom 0-8 --xyz --webviewer=none')
+}
+
+// vector
 let cmd = ''
 
 const layers = [
   {
     name: 'countries',
     input: 'data/gadm36_levels_shp/gadm36_0.shp',
-    tippecanoe: '--drop-densest-as-needed',
-    skip: true
+    tippecanoe: '--drop-densest-as-needed --exclude-all',
+    // skip: true
   },
   {
     name: 'regions',
     input: 'data/gadm36_levels_shp/gadm36_1.shp',
-    tippecanoe: '--drop-densest-as-needed',
+    tippecanoe: '--drop-densest-as-needed --exclude-all',
     minzoom: 5
   },
   {
     name: 'country_centroids',
     geojson: 'data/country_centroids.geojson',
-    tippecanoe: '--no-tile-size-limit --base-zoom=0',
-    skip: true
+    tippecanoe: '--no-tile-size-limit --base-zoom=2 --include=SHORT_NAME',
+    minzoom: 2
+    // skip: true
   },
   {
     name: 'populated_places',
     input: 'data/populated-places/populated-places.shp',
-    // TODO filter our by admin level
-    tippecanoe: '--no-tile-size-limit --base-zoom=0',
-    skip: true
+    // TODO filter our by admin level ?
+    tippecanoe: '--no-tile-size-limit --base-zoom=3',
+    minzoom: 3
+    // skip: true
   },
   {
     name: 'graticules',
-    // input: 'data/ne_110m_graticules_all/ne_110m_graticules_1.shp',
     geojson: 'data/graticules-clean.geojson',
     tippecanoe: '--no-tile-size-limit --base-zoom=0',
     // skip: true

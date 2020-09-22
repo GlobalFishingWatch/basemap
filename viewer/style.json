@@ -55,16 +55,16 @@
                     2,
                     0,
                     3,
-                    0.2
+                    1
                 ],
                 "line-width": [
                     "interpolate",
                     ["linear"],
                     ["zoom"],
                     2,
-                    1,
+                    0.5,
                     7,
-                    4
+                    1
                 ]
             }
         },
