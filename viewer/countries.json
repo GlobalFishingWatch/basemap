@@ -8,14 +8,16 @@
             "tiles": [
                 "https://storage.googleapis.com/public-tiles/basemap/bathymetry/{z}/{x}/{y}.png"
             ],
-            "maxzoom": 8
+            "maxzoom": 8,
+            "attribution": "Bathimetry: NASA"
         },
         "basemap_vector": {
             "type": "vector",
             "tiles": [
                 "https://storage.googleapis.com/public-tiles/basemap/vector_2/vector/{z}/{x}/{y}.pbf"
             ],
-            "maxzoom": 10
+            "maxzoom": 10,
+            "attribution": "Boundaries and country names: GADM"
         }
     },
     "layers": [

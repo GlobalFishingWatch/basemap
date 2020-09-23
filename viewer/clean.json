@@ -8,7 +8,8 @@
             "tiles": [
                 "https://storage.googleapis.com/public-tiles/basemap/bathymetry/{z}/{x}/{y}.png"
             ],
-            "maxzoom": 8
+            "maxzoom": 8,
+            "attribution": "Bathimetry: NASA"
         },
         "basemap_vector": {
             "type": "vector",
