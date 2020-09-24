@@ -17,6 +17,29 @@ if (GENERATE_BATHYMETRY) {
 let cmd = ''
 
 const layers = [
+<<<<<<< HEAD
+  // {
+  //   name: 'countries',
+  //   input: 'data/gadm36_levels_shp/gadm36_0.shp',
+  //   tippecanoe: '--drop-densest-as-needed',
+  // },
+  // {
+  //   name: 'regions',
+  //   input: 'data/gadm36_levels_shp/gadm36_1.shp',
+  //   tippecanoe: '--drop-densest-as-needed',
+  // },
+  // {
+  //   name: 'country_centroids',
+  //   geojson: 'data/country_centroids.geojson',
+  //   tippecanoe: '--no-tile-size-limit --base-zoom=0'
+  // },
+  // {
+  //   name: 'populated_places',
+  //   input: 'data/populated-places/populated-places.shp',
+  //   // TODO filter our by admin level
+  //   tippecanoe: '--no-tile-size-limit --base-zoom=0'
+  // },
+=======
   {
     name: 'countries',
     input: 'data/gadm36_levels_shp/gadm36_0.shp',
@@ -44,11 +67,16 @@ const layers = [
     minzoom: 3
     // skip: true
   },
+>>>>>>> ec169c1af249fcc882e43e981244f83b90e825bd
   {
     name: 'graticules',
     geojson: 'data/graticules-clean.geojson',
+<<<<<<< HEAD
+    tippecanoe: '--no-tile-size-limit --base-zoom=0'
+=======
     tippecanoe: '--no-tile-size-limit --base-zoom=0',
     // skip: true
+>>>>>>> ec169c1af249fcc882e43e981244f83b90e825bd
   },
 ]
 

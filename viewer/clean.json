@@ -1,0 +1,95 @@
+{
+    "version": 8,
+    "glyphs": "https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-glyphs/master/_output/{fontstack}/{range}.pbf?raw=true",
+    "sprite": "https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-sprites/master/out/sprites",
+    "sources": {
+        "bathymetry": {
+            "type": "raster",
+            "tiles": [
+                "https://storage.googleapis.com/public-tiles/basemap/bathymetry/{z}/{x}/{y}.png"
+            ],
+            "maxzoom": 8,
+            "attribution": "Bathimetry: NASA"
+        },
+        "basemap_vector": {
+            "type": "vector",
+            "tiles": [
+                "https://storage.googleapis.com/public-tiles/basemap/vector_2/vector/{z}/{x}/{y}.pbf"
+            ],
+            "maxzoom": 10
+        }
+    },
+    "layers": [
+        {
+            "id": "bg",
+            "type": "background",
+            "paint": {
+                "background-color": "#002357"
+            }
+        },
+        {
+            "id": "bathymetry",
+            "type": "raster",
+            "source": "bathymetry"
+        },
+        {
+            "id": "graticules_30",
+            "type": "line",
+            "source": "basemap_vector",
+            "source-layer": "graticules",
+            "filter": ["==", ["get", "thirties"], true],
+            "paint": {
+                "line-color": "white",
+                "line-opacity": 0.2
+            }
+        },
+        {
+            "id": "graticules_10",
+            "type": "line",
+            "source": "basemap_vector",
+            "source-layer": "graticules",
+            "filter": ["==", ["get", "tens"], true],
+            "minzoom": 2,
+            "paint": {
+                "line-color": "white",
+                "line-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    2,
+                    0,
+                    4,
+                    0.2
+                ]
+            }
+        },
+        {
+            "id": "graticules_1",
+            "type": "line",
+            "source": "basemap_vector",
+            "source-layer": "graticules",
+            "minzoom": 5,
+            "paint": {
+                "line-color": "white",
+                "line-opacity": [
+                    "interpolate",
+                    ["linear"],
+                    ["zoom"],
+                    5,
+                    0,
+                    7,
+                    0.2
+                ]
+            }
+        },
+        {
+            "id": "countries",
+            "type": "fill",
+            "source": "basemap_vector",
+            "source-layer": "countries",
+            "paint": {
+                "fill-color": "#274777"
+            }
+        }
+    ]
+}
