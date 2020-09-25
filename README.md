@@ -1,5 +1,8 @@
 Generates tiles needed for rendering GlobalFishingWatch's basemap.
 
+
+![Screenshot 2020-09-24 at 19 00 03](https://user-images.githubusercontent.com/1583415/94254425-0c191800-ff27-11ea-9981-dabb94c1e09f.png)
+
 Dependencies:
 - gdal
 - tippecanoe
