@@ -1,0 +1,320 @@
+{
+  "version": 8,
+  "glyphs": "https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-glyphs/master/_output/{fontstack}/{range}.pbf?raw=true",
+  "sprite": "https://raw.githubusercontent.com/GlobalFishingWatch/map-gl-sprites/master/out/sprites",
+  "sources": {
+    "basemap_bathymetry": {
+      "type": "raster",
+      "tiles": [
+          "https://storage.googleapis.com/public-tiles/basemap/bathymetry/{z}/{x}/{y}.png"
+      ],
+      "maxzoom": 8,
+      "attribution": "<a href=\"https://visibleearth.nasa.gov/images/73963/bathymetry\">NASA</a>"
+    },
+    "basemap_default": {
+      "type": "vector",
+      "tiles": [
+        "https://storage.googleapis.com/public-tiles/basemap/default/{z}/{x}/{y}.pbf"
+      ],
+      "maxzoom": 9,
+      "attribution": "<a href=\"https://www.naturalearthdata.com\">Natural Earth</a> | <a href=\"https://gadm.org/\">GADM</a> | <a href=\"https://msi.nga.mil/Publications/WPI\">World Port Index</a>"
+    },
+    "basemap_gadm": {
+      "type": "vector",
+      "tiles": [
+        "https://storage.googleapis.com/public-tiles/basemap/gadm/{z}/{x}/{y}.pbf"
+      ],
+      "maxzoom": 9,
+      "attribution": "<a href=\"https://gadm.org/\">GADM</a>"
+    }
+  },
+  "layers": [
+      {
+          "id": "bg",
+          "type": "background",
+          "paint": {
+              "background-color": "#002357"
+          }
+      },
+      {
+          "id": "bathymetry",
+          "type": "raster",
+          "source": "basemap_bathymetry"
+      },
+      {
+          "id": "graticules_30",
+          "type": "line",
+          "source": "basemap_default",
+          "source-layer": "graticules",
+          "filter": ["==", ["get", "thirties"], true],
+          "paint": {
+              "line-color": "white",
+              "line-opacity": 0.2
+          }
+      },
+      {
+          "id": "graticules_10",
+          "type": "line",
+          "source": "basemap_default",
+          "source-layer": "graticules",
+          "filter": ["==", ["get", "tens"], true],
+          "minzoom": 2,
+          "paint": {
+              "line-color": "white",
+              "line-opacity": [
+                  "interpolate",
+                  ["linear"],
+                  ["zoom"],
+                  2,
+                  0,
+                  4,
+                  0.2
+              ]
+          }
+      },
+      {
+          "id": "graticules_1",
+          "type": "line",
+          "source": "basemap_default",
+          "source-layer": "graticules",
+          "minzoom": 5,
+          "paint": {
+              "line-color": "white",
+              "line-opacity": [
+                  "interpolate",
+                  ["linear"],
+                  ["zoom"],
+                  5,
+                  0,
+                  7,
+                  0.2
+              ]
+          }
+      },
+      {
+          "id": "countries",
+          "type": "fill",
+          "source": "basemap_default",
+          "source-layer": "countries",
+          "paint": {
+              "fill-color": "#274777"
+          }
+      },
+      {
+        "id": "regions_boundaries",
+        "type": "line",
+        "source": "basemap_gadm",
+        "source-layer": "regions",
+        "minzoom": 4,
+        "paint": {
+            "line-color": "#3D5984",
+            "line-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                4,
+                0,
+                6,
+                1
+            ]
+        }
+    },
+    {
+        "id": "countries_boundaries",
+        "type": "line",
+        "source": "basemap_default",
+        "source-layer": "countries",
+        "minzoom": 2,
+        "paint": {
+            "line-color": "#536F9B",
+            "line-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                2,
+                0,
+                3,
+                1
+            ]
+        }
+    },
+    {
+        "id": "populated_places_1",
+        "type": "symbol",
+        "source": "basemap_default",
+        "source-layer": "populated_places",
+        "filter": ["==", ["get", "SCALERANK"], 1],
+        "minzoom": 3,
+        "layout": {
+            "text-field": "{NAME}",
+            "text-font": [
+                "Roboto Medium"
+            ],
+            "text-size": 13,
+            "text-offset": [0, -0.7]
+        },
+        "paint": {
+            "text-color": "white",
+            "text-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                3,
+                0,
+                4,
+                0.5
+            ]
+        }
+    },
+    {
+        "id": "populated_places_dot_1",
+        "type": "circle",
+        "source": "basemap_default",
+        "source-layer": "populated_places",
+        "filter": ["==", ["get", "SCALERANK"], 1],
+        "minzoom": 3,
+        "paint": {
+            "circle-radius": 2,
+            "circle-color": "white",
+            "circle-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                3,
+                0,
+                4,
+                0.5
+            ]
+        }
+    },
+    {
+        "id": "populated_places_2345",
+        "type": "symbol",
+        "source": "basemap_default",
+        "source-layer": "populated_places",
+        "filter": ["match", ["get", "SCALERANK"], [2, 3, 4, 5], true, false],
+        "minzoom": 5,
+        "layout": {
+            "text-field": "{NAME}",
+            "text-font": [
+                "Roboto Medium"
+            ],
+            "text-size": 12,
+            "text-offset": [0, -1]
+        },
+        "paint": {
+            "text-color": "white",
+            "text-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                6,
+                0,
+                7,
+                0.5
+            ]
+        }
+    },
+    {
+        "id": "populated_places_dot_2345",
+        "type": "circle",
+        "source": "basemap_default",
+        "source-layer": "populated_places",
+        "filter": ["match", ["get", "SCALERANK"], [2, 3,4, 5], true, false],
+        "minzoom": 5,
+        "paint": {
+            "circle-radius": 2,
+            "circle-color": "white",
+            "circle-opacity": [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                6,
+                0,
+                7,
+                0.5
+            ]
+        }
+    },
+    {
+        "id": "countries_labels",
+        "type": "symbol",
+        "source": "basemap_default",
+        "source-layer": "country_centroids",
+        "minzoom": 2,
+        "layout": {
+            "text-field": "{SHORT_NAME}",
+            "text-font": [
+                "Roboto Medium"
+            ],
+            "text-transform": "uppercase",
+            "text-letter-spacing": 0.15,
+            "text-line-height": 1,
+            "text-size": 12,
+            "text-padding" : 30
+        },
+        "paint": {
+            "text-color": "white",
+            "text-opacity":  [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                2,
+                0,
+                3,
+                0.5
+            ]
+        }
+    },
+    {
+      "id": "ports_1",
+      "type": "symbol",
+      "source": "basemap_default",
+      "source-layer": "ports",
+      "minzoom": 2,
+      "filter": ["match", ["get", "HARBORSIZE"], ["L", "M"], true, false],
+      "layout": {
+          "text-field": "{PORT_NAME}",
+          "text-font": [
+              "Roboto Medium"
+          ],
+          "text-size": 12,
+          "text-transform": "lowercase",
+          "text-offset": [0, -0.7]
+      },
+      "paint": {
+          "text-color": "white",
+          "text-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              3,
+              0,
+              4,
+              0.5
+          ]
+      }
+  },
+  {
+      "id": "ports_dot_1",
+      "type": "circle",
+      "source": "basemap_default",
+      "source-layer": "ports",
+      "minzoom": 2,
+      "filter": ["match", ["get", "HARBORSIZE"], ["L", "M"], true, false],
+      "paint": {
+          "circle-radius": 2,
+          "circle-color": "white",
+          "circle-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              2,
+              0,
+              4,
+              0.5
+          ]
+      }
+  }
+  ]
+}

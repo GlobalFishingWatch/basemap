@@ -7,20 +7,44 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
 </head>
-<body style="padding: 0; margin: 0;">
+<body style="padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif;">
+  <div style="position: absolute; background: white; z-index: 1">
+    <input type="checkbox" id="gadm"/><label for="gadm">gadm</label>
+    <input type="checkbox" id="ports"/><label for="ports">ports</label>
+  </div>
   <div id='map' style='width: 100vw; height: 100vh;'></div>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     var styleParam = urlParams.get("style") || "clean";
-    fetch('./' + styleParam + '.json').then(response => response.json()).then((style) => {
+
+    let style
+    let gadm = false
+    let ports = false
+    const renderMap = () => {
       const useLocalTiles = urlParams.get('useLocalTiles') === 'true'
       if (useLocalTiles) {
-        style.sources.bathymetry.tiles = ['http://localhost:9090/bathymetry/{z}/{x}/{y}.png']
-        style.sources.basemap_vector.tiles = ['http://localhost:9090/vector/{z}/{x}/{y}.pbf']
+        style.sources.basemap_bathymetry.tiles = ['http://localhost:9090/bathymetry/{z}/{x}/{y}.png']
+        style.sources.basemap_default.tiles = ['http://localhost:9090/default/{z}/{x}/{y}.pbf']
+        style.sources.basemap_gadm.tiles = ['http://localhost:9090/gadm/{z}/{x}/{y}.pbf']
       }
+      const newStyle = {...style}
+      let layers = [...newStyle.layers]
+      if (!gadm) {
+        layers = layers.filter(layer => 
+          ['regions_boundaries', 'countries_boundaries', 'populated_places_1',  'populated_places_dot_1', 'populated_places_2345', 'populated_places_dot_2345', 'countries_labels']
+          .indexOf(layer.id) === -1)
+      }
+      if (!ports) {
+        layers = layers.filter(layer => 
+          ['ports_dot_1', 'ports_1']
+          .indexOf(layer.id) === -1)
+      }
+
+      newStyle.layers = layers
+
       var map = new mapboxgl.Map({
         container: 'map',
-        style,
+        style: newStyle,
         center: [
           -74.5,
           40
@@ -30,6 +54,20 @@
       });
       map.on('click','countries', (event) => {
         console.log(event.features)
+      })
+    }
+
+    fetch('./' + styleParam + '.json').then(response => response.json()).then((loadedStyle) => {
+      style = loadedStyle
+      renderMap()
+      
+      document.getElementById('gadm').addEventListener('click', event => {
+        gadm = event.target.checked
+        renderMap()
+      })
+      document.getElementById('ports').addEventListener('click', event => {
+        ports = event.target.checked
+        renderMap()
       })
     })
   </script>
