@@ -57,7 +57,7 @@
       })
     }
 
-    fetch('./' + styleParam + '.json').then(response => response.json()).then((loadedStyle) => {
+    fetch('./style.json').then(response => response.json()).then((loadedStyle) => {
       style = loadedStyle
       renderMap()
       
